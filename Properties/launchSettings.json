@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NetifePanel (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "NetifePanel (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
