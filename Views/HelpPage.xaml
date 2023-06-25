@@ -7,9 +7,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:l="using:WinUI3Localizer"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <ScrollViewer>
-        
+        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Top" Margin="45,15,45,0">
+            <Expander IsExpanded="False" ExpandDirection="Down" HorizontalAlignment="Stretch" l:Uids.Uid="Help_Summarize">
+                <TextBlock TextWrapping="Wrap" MaxLines="10" l:Uids.Uid="Help_Summarize_Cotent"/>
+            </Expander>
+        </StackPanel>
     </ScrollViewer>
 </Page>

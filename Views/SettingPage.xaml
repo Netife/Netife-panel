@@ -7,9 +7,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:l="using:WinUI3Localizer"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock> asdsASDASDASDadasdasd</TextBlock>
-    </Grid>
+    <!--Left Navigate-->
+    <NavigationView x:Name="Navigate"
+                        PaneDisplayMode="Left"
+                        IsSettingsVisible="False"
+                        BackRequested="NavigateBackRequested"
+                        ItemInvoked="NavgateItemInvoked"
+                        Loaded="NavigateLoaded">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Icon="Camera" l:Uids.Uid="Settings_Navigate_Appearance" Tag="NetifePanel.Views.SettingAppearancePage"/>
+        </NavigationView.MenuItems>
+        <Frame x:Name="contentFrame"/>
+    </NavigationView>
 </Page>

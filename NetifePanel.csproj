@@ -21,6 +21,7 @@
     <None Remove="Views\MailPage.xaml" />
     <None Remove="Views\MainBodyPage.xaml" />
     <None Remove="Views\ProgramLoadingPage.xaml" />
+    <None Remove="Views\SettingAppearancePage.xaml" />
     <None Remove="Views\SettingPage.xaml" />
   </ItemGroup>
 
@@ -72,6 +73,11 @@
     <Content Update="Strings\zh-CN\Resources.resw">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SettingAppearancePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AccountPage.xaml">

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -76,13 +77,13 @@ namespace NetifePanel
 
             //Build relative service
             ConfigureService();
-
+            
             RootWindow = new MainWindow();
-
             RootFrame = new Frame();
-            RootFrame.Navigate(typeof(ProgramLoadingPage), args.Arguments);
             RootWindow.Content = RootFrame;
             RootWindow.Activate();
+
+            RootFrame.Navigate(typeof(ProgramLoadingPage), args.Arguments);
         }
 
         private void ConfigureService()
@@ -98,7 +99,9 @@ namespace NetifePanel
 
                        service.AddSingleton<INavigation>(navigateService);
                        service.AddSingleton<IStaticData, StaticData>();
-                       
+                       service.AddSingleton<IConfigurationService, ConfigurationService>();
+
+
                        //Configure Navigation
                        navigateService.Configure(nameof(ProgramLoadingPage), typeof(ProgramLoadingPage));
                        navigateService.Configure(nameof(MainBodyPage), typeof(MainBodyPage));
@@ -109,7 +112,7 @@ namespace NetifePanel
                        navigateService.Configure(nameof(AccountPage), typeof(AccountPage));
                        navigateService.Configure(nameof(MailPage), typeof(MailPage));
                        navigateService.Configure(nameof(LibraryPage), typeof(LibraryPage));
-
+                       navigateService.Configure(nameof(SettingAppearancePage), typeof(SettingAppearancePage));
 
                        //ViewModel
                        service.AddTransient<MainBodyViewModel>();
@@ -121,9 +124,23 @@ namespace NetifePanel
                        service.AddTransient<AccountViewModel>();
                        service.AddTransient<MailViewModel>();
                        service.AddTransient<LibraryViewModel>();
-                   
+                       service.AddTransient<SettingAppearanceViewModel>();
+
+                   })
+                   .ConfigureAppConfiguration((ctx,builder) =>
+                   {
+                       //Check for the existence of the configuration
+                       var baseConfigPath = Path.Combine(AppContext.BaseDirectory, "Config");
+                       var configFolder = new DirectoryInfo(baseConfigPath);
+                       if (!configFolder.Exists) configFolder.Create();
+                       var file = new FileInfo(Path.Combine(baseConfigPath, "Settings.json"));
+                       if (!file.Exists) file.Create();
+                       
+                       builder.AddJsonFile(file.FullName, optional: false, reloadOnChange: true);
                    })
                    .Build();
+            //Default Localizer
+            Localizer.Get().SetLanguage(GetService<IConfiguration>().GetRequiredSection("appearance")["language"].ToString());
         }
 
         private async Task InitializeLocalizer()
@@ -139,7 +156,7 @@ namespace NetifePanel
                 .AddStringResourcesFolderForLanguageDictionaries(stringsFolder.Path)
                 .SetOptions(options =>
                 {
-                    options.DefaultLanguage = "zh-CN";
+                    options.DefaultLanguage = "en-US";
                     options.UseUidWhenLocalizedStringNotFound = true;
                 })
                 .Build();

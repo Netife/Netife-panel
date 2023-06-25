@@ -28,7 +28,7 @@ namespace NetifePanel.Serivces
             this.localizer = localizer;
         }
 
-        public void Configure(string page, Type type)
+        public INavigation Configure(string page, Type type)
         {
             if (_pages.Keys.Any(sp => sp == page))
             {
@@ -36,6 +36,7 @@ namespace NetifePanel.Serivces
             }
 
             _pages[page] = type;
+            return this;
         }
 
         public string CurrentPage

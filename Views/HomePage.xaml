@@ -4,12 +4,130 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NetifePanel.Views"
+    xmlns:dataModel="using:NetifePanel.Models.ArchieveItems"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:l="using:WinUI3Localizer"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <DataTemplate x:Key="TempArchieveTemplate" x:DataType="dataModel:ArchieveItem">
+            <TreeViewItem AutomationProperties.Name="{x:Bind Name, Mode=OneWay}"
+            ItemsSource="{x:Bind ArchieveItems, Mode=OneWay}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE8DE;" FontSize="15"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                </StackPanel>
+            </TreeViewItem>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CommonArchieveTemplate" x:DataType="dataModel:ArchieveItem">
+            <TreeViewItem AutomationProperties.Name="{x:Bind Name, Mode=OneWay}"
+            ItemsSource="{x:Bind ArchieveItems, Mode=OneWay}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE8B7;" FontSize="15"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                </StackPanel>
+            </TreeViewItem>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SharedTemplate" x:DataType="dataModel:ArchieveItem">
+            <TreeViewItem AutomationProperties.Name="{x:Bind Name, Mode=OneWay}"
+            ItemsSource="{x:Bind ArchieveItems, Mode=OneWay}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE8F7;" FontSize="15"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                </StackPanel>
+            </TreeViewItem>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PacketTemplate" x:DataType="dataModel:ArchieveItem">
+            <TreeViewItem AutomationProperties.Name="{x:Bind Name, Mode=OneWay}"
+            ItemsSource="{x:Bind ArchieveItems, Mode=OneWay}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE725;" FontSize="15"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                </StackPanel>
+            </TreeViewItem>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TempPacketTemplate" x:DataType="dataModel:ArchieveItem">
+            <TreeViewItem AutomationProperties.Name="{x:Bind Name, Mode=OneWay}"
+            ItemsSource="{x:Bind ArchieveItems, Mode=OneWay}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE724;" FontSize="15"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                </StackPanel>
+            </TreeViewItem>
+        </DataTemplate>
+
+        <DataTemplate x:Key="NoteTemplate" x:DataType="dataModel:ArchieveItem">
+            <TreeViewItem AutomationProperties.Name="{x:Bind Name, Mode=OneWay}"
+            ItemsSource="{x:Bind ArchieveItems, Mode=OneWay}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE8A4;" FontSize="15"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                </StackPanel>
+            </TreeViewItem>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RawTextTemplate" x:DataType="dataModel:ArchieveItem">
+            <TreeViewItem AutomationProperties.Name="{x:Bind Name, Mode=OneWay}"
+            ItemsSource="{x:Bind ArchieveItems, Mode=OneWay}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE7BC;" FontSize="15"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                </StackPanel>
+            </TreeViewItem>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="SessionTemplate" x:DataType="dataModel:ArchieveItem">
+            <TreeViewItem AutomationProperties.Name="{x:Bind Name, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE71B;" FontSize="15"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                </StackPanel>
+            </TreeViewItem>
+        </DataTemplate>
+
+        <dataModel:ArchieveItemTemplateSelector x:Key="ArchieveItemSelector"
+        TempArchieve="{StaticResource TempArchieveTemplate}"                                      
+        SharedArchieve="{StaticResource SharedTemplate}"
+        CommonArchieve="{StaticResource CommonArchieveTemplate}"                                        
+        Packet="{StaticResource PacketTemplate}"
+        TempPacket="{StaticResource TempPacketTemplate}"                                        
+        Note="{StaticResource NoteTemplate}"                                        
+        RawText="{StaticResource RawTextTemplate}"
+        Session="{StaticResource SessionTemplate}"/>
+    </Page.Resources>
+
     <Grid>
-        <TextBlock> asdsadasdasd</TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="275"/>
+            <ColumnDefinition Width="585"/>
+            <ColumnDefinition Width="530"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Archieve-->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock l:Uids.Uid="Home_Archieve_Tip" Margin="10,4,0,4" FontSize="15" FontWeight="Light" Grid.Row="0"/>
+
+            <TreeView Grid.Row="1" CanDragItems="False" AllowDrop="False" ItemsSource="{x:Bind ViewModel.Archieves, Mode=TwoWay}"
+                      ItemTemplateSelector="{StaticResource ArchieveItemSelector}"/>
+        </Grid>
     </Grid>
 </Page>

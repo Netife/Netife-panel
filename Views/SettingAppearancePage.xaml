@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="NetifePanel.Views.SettingAppearancePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NetifePanel.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:l="using:WinUI3Localizer"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Top" Margin="45,15,45,0">
+            <Expander IsExpanded="False" ExpandDirection="Down" HorizontalAlignment="Stretch" l:Uids.Uid="Settings_Appearance_Language">
+                <Grid HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock l:Uids.Uid="Settings_Appearance_Language_Language" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
+                    <Border Width="750" Grid.Column="1"/>
+                    <ComboBox SelectedValue="{x:Bind ViewModel.LanguageSettings, Mode=TwoWay}" 
+                              Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2">
+                        <x:String>zh-CN</x:String>
+                        <x:String>en-US</x:String>
+                    </ComboBox>
+                </Grid>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

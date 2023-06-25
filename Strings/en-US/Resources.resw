@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Archieve_TempArchieve" xml:space="preserve">
+    <value>TempArchieve</value>
+  </data>
+  <data name="Archieve_TempSession" xml:space="preserve">
+    <value>TempSession</value>
+  </data>
   <data name="BreadNavigate_Account" xml:space="preserve">
     <value>Account</value>
   </data>
@@ -141,6 +147,17 @@
   <data name="BreadNavigate_Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Help_Summarize.Header" xml:space="preserve">
+    <value>Summarize</value>
+  </data>
+  <data name="Help_Summarize_Cotent.Text" xml:space="preserve">
+    <value>Netife Panel is a visual version of Netife Frotend, which is based on the relevant ecological development of Netife and is an official visualization method produced and recommended by Netife.
+Netife Panel provides several network packet capture functions, including but not limited to stream mode listening, network stream capture modification packet capture, and so on. Netife Panel also provides access solutions for multi-language plug-ins based on components such as Netife Dispatcher and Netife JsRemote.
+If you want to learn more about Netife and its associated ecology, please visit our Github organization: Netife.</value>
+  </data>
+  <data name="Home_Archieve_Tip.Text" xml:space="preserve">
+    <value>My Archieves</value>
+  </data>
   <data name="LeftMainNavigate_Account.Content" xml:space="preserve">
     <value>Account</value>
   </data>
@@ -158,5 +175,14 @@
   </data>
   <data name="LeftMainNavigate_Notification.Content" xml:space="preserve">
     <value>Notification</value>
+  </data>
+  <data name="Settings_Appearance_Language.Header" xml:space="preserve">
+    <value>Language Relative Settings</value>
+  </data>
+  <data name="Settings_Appearance_Language_Language.Text" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="Settings_Navigate_Appearance.Content" xml:space="preserve">
+    <value>Appearance</value>
   </data>
 </root>
