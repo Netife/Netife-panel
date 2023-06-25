@@ -16,7 +16,7 @@
 
   <Properties>
     <DisplayName>NetifePanel</DisplayName>
-    <PublisherDisplayName>Administrator</PublisherDisplayName>
+    <PublisherDisplayName>EpicMo</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -26,7 +26,8 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="en-US"/>
+    <Resource Language="zh-CN"/>
   </Resources>
 
   <Applications>
@@ -47,5 +48,8 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient"/>
+    <Capability Name="internetClientServer"/>
+    <Capability Name="privateNetworkClientServer"/>
   </Capabilities>
 </Package>

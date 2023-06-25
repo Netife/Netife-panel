@@ -2,12 +2,41 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Content Update="Strings\en-US\Resources.resw">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
     <None Update="Package.appxmanifest">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="Views\AccountPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MailPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\LibraryPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ComposerPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SettingPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HomePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HelpPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProgramLoadingPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\MainBodyPage.xaml">
       <SubType>Designer</SubType>
     </Page>

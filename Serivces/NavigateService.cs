@@ -1,12 +1,15 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using NetifePanel.Interface;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinUI3Localizer;
 
 namespace NetifePanel.Serivces
 {
@@ -17,8 +20,14 @@ namespace NetifePanel.Serivces
         public const string RootPage = "(Root)";
 
         public const string UnKnownPage = "(UnKnownPage)";
-        private static Frame AppFrame => (Frame)Window.Current.Content;
-        
+        private static Frame AppFrame => App.CurrentApp.RootFrame;
+
+        private readonly ILocalizer localizer;
+        public NavigateService(ILocalizer localizer)
+        {
+            this.localizer = localizer;
+        }
+
         public void Configure(string page, Type type)
         {
             if (_pages.Keys.Any(sp => sp == page))
@@ -29,7 +38,7 @@ namespace NetifePanel.Serivces
             _pages[page] = type;
         }
 
-        public string CurrentPage 
+        public string CurrentPage
         {
             get
             {
@@ -48,10 +57,12 @@ namespace NetifePanel.Serivces
 
                 return item.Key;
             }
-        
+
         }
 
         public bool CanGoBack => AppFrame.CanGoBack;
+
+        public ObservableCollection<string> BreadStack { get; private set; } = new ();
 
         public void GoBack()
         {
@@ -72,5 +83,26 @@ namespace NetifePanel.Serivces
         }
 
         public void NavigateTo(string page) => NavigateTo(page, null);
+
+        /// <summary>
+        /// Use Dispatcher Queue to update UI frame
+        /// </summary>
+        /// <param name="dispatcherQueue"></param>
+        /// <param name="page"></param>
+        /// <param name="paramters"></param>
+        public void NavigateInUIThread(DispatcherQueue dispatcherQueue, string page, object paramters = null)
+        {
+            dispatcherQueue.TryEnqueue(() => NavigateTo(page, paramters));
+        }
+
+        public void PopBreadPath() => BreadStack.RemoveAt(BreadStack.Count - 1);
+
+        public void PushBreadPath(string page) => BreadStack.Add(page);
+
+        public void ResetBreadPath()
+        {
+            BreadStack.Clear();
+            BreadStack.Add(localizer.GetLocalizedString("BreadNavigate_Home"));
+        }
     }
 }

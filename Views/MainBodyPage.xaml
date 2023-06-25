@@ -7,9 +7,58 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:l="using:WinUI3Localizer"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border x:Name="AppTitleBar" Height="48" Grid.Row="0">
+            <!--TopBar-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Logo-->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="16,4">
+                    <Border CornerRadius="10" Width="30" Height="30">
+                        <ImageIcon Source="ms-appx:///Assets/icon/Netife.jpg"/>
+                    </Border>
+                    <TextBlock Margin="10,4">
+                            Netife Panel
+                    </TextBlock>
+                </StackPanel>
+
+                <BreadcrumbBar ItemsSource="{x:Bind ViewModel.TopBreadPath, Mode=OneWay}" 
+                               Margin="0,0,150,0" HorizontalAlignment="Center" 
+                               VerticalAlignment="Center" Grid.Column="1"/>
+            </Grid>
+        </Border>
+
+        <!--Left Navigate-->
+        <NavigationView x:Name="Navigate"
+                        PaneDisplayMode="LeftCompact"
+                        IsSettingsVisible="True"
+                        BackRequested="NavigateBackRequested"
+                        ItemInvoked="NavgateItemInvoked"
+                        Loaded="NavigateLoaded"
+                        Grid.Row="1">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Home" l:Uids.Uid="LeftMainNavigate_DashBoard" Tag="NetifePanel.Views.HomePage"/>
+                <NavigationViewItem Icon="Clock" l:Uids.Uid="LeftMainNavigate_Composer" Tag="NetifePanel.Views.ComposerPage"/>
+                <NavigationViewItem Icon="Library" l:Uids.Uid="LeftMainNavigate_Component" Tag="NetifePanel.Views.LibraryPage"/>
+                <NavigationViewItem Icon="Mail" l:Uids.Uid="LeftMainNavigate_Notification" Tag="NetifePanel.Views.MailPage"/>
+            </NavigationView.MenuItems>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Icon="Contact" l:Uids.Uid="LeftMainNavigate_Account" Tag="NetifePanel.Views.AccountPage"/>
+                <NavigationViewItem Icon="Help" l:Uids.Uid="LeftMainNavigate_Help" Tag="NetifePanel.Views.HelpPage"/>
+            </NavigationView.FooterMenuItems>
+            <Frame x:Name="contentFrame"/>
+        </NavigationView>
     </Grid>
 </Page>

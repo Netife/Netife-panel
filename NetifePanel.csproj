@@ -13,7 +13,15 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\icon\Netife.jpg" />
+    <None Remove="Views\AccountPage.xaml" />
+    <None Remove="Views\ComposerPage.xaml" />
+    <None Remove="Views\HelpPage.xaml" />
+    <None Remove="Views\HomePage.xaml" />
+    <None Remove="Views\LibraryPage.xaml" />
+    <None Remove="Views\MailPage.xaml" />
     <None Remove="Views\MainBodyPage.xaml" />
+    <None Remove="Views\ProgramLoadingPage.xaml" />
+    <None Remove="Views\SettingPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +37,13 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PInvoke.User32" Version="0.7.124" />
+    <PackageReference Include="WinUI3Localizer" Version="1.0.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -48,6 +59,59 @@
     <Content Update="Assets\icon\Netife.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Strings\**\*.resw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Strings\en-US\Resources.resw">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Strings\zh-CN\Resources.resw">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\AccountPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\LibraryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ComposerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HelpPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ProgramLoadingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\MainBodyPage.xaml">
