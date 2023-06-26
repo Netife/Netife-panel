@@ -176,6 +176,42 @@ Netife Panel 提供了若干网络抓包功能，包括但不限于流模式监�
   <data name="LeftMainNavigate_Notification.Content" xml:space="preserve">
     <value>通知</value>
   </data>
+  <data name="MainPage_ToolBar_FastOperation.Text" xml:space="preserve">
+    <value>快捷操作：</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_None.Content" xml:space="preserve">
+    <value>不处理</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_OnlyGet.Content" xml:space="preserve">
+    <value>仅GET</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_OnlyNotSystemRequest.Content" xml:space="preserve">
+    <value>非系统级请求</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_OnlyPost.Content" xml:space="preserve">
+    <value>仅POST</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_OnlyXHR.Content" xml:space="preserve">
+    <value>仅XHR</value>
+  </data>
+  <data name="MainPage_ToolBar_Filter" xml:space="preserve">
+    <value>过滤器</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Pause" xml:space="preserve">
+    <value>暂停</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Run" xml:space="preserve">
+    <value>运行</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Share" xml:space="preserve">
+    <value>分享</value>
+  </data>
   <data name="Settings_Appearance_Language.Header" xml:space="preserve">
     <value>语言相关的设置</value>
   </data>

@@ -176,6 +176,42 @@ If you want to learn more about Netife and its associated ecology, please visit 
   <data name="LeftMainNavigate_Notification.Content" xml:space="preserve">
     <value>Notification</value>
   </data>
+  <data name="MainPage_ToolBar_FastOperation.Text" xml:space="preserve">
+    <value>FastOperation:</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_None.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_OnlyGet.Content" xml:space="preserve">
+    <value>OnlyGet</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_OnlyNotSystemRequest.Content" xml:space="preserve">
+    <value>OnlyNotSystemRequest</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_OnlyPost.Content" xml:space="preserve">
+    <value>OnlyPost</value>
+  </data>
+  <data name="MainPage_ToolBar_FastOperation_OnlyXHR.Content" xml:space="preserve">
+    <value>OnlyXHR</value>
+  </data>
+  <data name="MainPage_ToolBar_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Run" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MainPage_ToolBar_State_Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
   <data name="Settings_Appearance_Language.Header" xml:space="preserve">
     <value>Language Relative Settings</value>
   </data>

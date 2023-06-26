@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:l="using:WinUI3Localizer"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
@@ -128,6 +129,66 @@
 
             <TreeView Grid.Row="1" CanDragItems="False" AllowDrop="False" ItemsSource="{x:Bind ViewModel.Archieves, Mode=TwoWay}"
                       ItemTemplateSelector="{StaticResource ArchieveItemSelector}"/>
+        </Grid>
+        
+        <!--Main Table-->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!--Command Tip-->
+            <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right" Grid.Row="0">
+                <AppBarElementContainer HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Margin="0,0,25,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <TextBlock l:Uids.Uid="MainPage_ToolBar_FastOperation" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ComboBox>
+                            <ComboBoxItem l:Uids.Uid="MainPage_ToolBar_FastOperation_None"/>
+                            <ComboBoxItem l:Uids.Uid="MainPage_ToolBar_FastOperation_OnlyPost"/>
+                            <ComboBoxItem l:Uids.Uid="MainPage_ToolBar_FastOperation_OnlyGet"/>
+                            <ComboBoxItem l:Uids.Uid="MainPage_ToolBar_FastOperation_OnlyXHR"/>
+                            <ComboBoxItem l:Uids.Uid="MainPage_ToolBar_FastOperation_OnlyNotSystemRequest"/>
+                        </ComboBox>
+                    </StackPanel>
+                </AppBarElementContainer>
+                <AppBarSeparator/>
+                <AppBarButton Icon="Pause" l:Uids.Uid="MainPage_ToolBar_State">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F5"/>
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Icon="Save" l:Uids.Uid="MainPage_ToolBar_Save">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Icon="Delete" l:Uids.Uid="MainPage_ToolBar_Delete">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="D"/>
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Icon="Share" l:Uids.Uid="MainPage_ToolBar_Share">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="L"/>
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton Icon="Filter" l:Uids.Uid="MainPage_ToolBar_Filter">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="o" />
+                        </AppBarButton.KeyboardAccelerators>
+                    </AppBarButton>
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
+            
+            <!--Table-->
+            <controls:DataGrid x:Name="dataGrid" ItemsSource="{x:Bind ViewModel.Archieves}" SelectionMode="Single">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Rank" Binding="{Binding Path=No}" Tag="Rank" />
+                    <controls:DataGridComboBoxColumn Header="Mountain" Binding="{Binding Path=Name}" Tag="Mountain" />
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
         </Grid>
     </Grid>
 </Page>

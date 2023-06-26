@@ -43,5 +43,11 @@ namespace NetifePanel.ViewModels
                 }
             }
         };
+
+        [ObservableProperty]
+        private ObservableCollection<Packet> packets = new() { new Packet(){
+                
+            }
+        };
     }
 }
