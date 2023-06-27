@@ -55,9 +55,10 @@
             </Grid>
 
             <!--Loading Bar-->
-            <Border Height="50">
+            <Border Height="30">
                 <ProgressRing IsActive="True" Background="LightGray"/>
             </Border>
+            <TextBlock Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{x:Bind ViewModel.LoadingTips, Mode=OneWay}"/>
             <!--FootPrint-->
             <TextBlock Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center">
                         ©copyright 2022-2023 Netife All Right Reserved.

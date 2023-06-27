@@ -16,6 +16,6 @@ namespace NetifePanel.Models.ArchieveItems
 
         public NetworkProtocal Protocal { get; set; }
 
-        public ObservableCollection<NetworkSiglePacket> NetworkSiglePackets { get; set; }
+        public ObservableCollection<NetworkSinglePacket> NetworkSiglePackets { get; set; } = new();
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NetifePanel.Models.ArchieveItems
 {
-    public class NetworkSiglePacket
+    public class NetworkSinglePacket
     {
         public NetworkApplicationType ApplicationType { get; set; }
 

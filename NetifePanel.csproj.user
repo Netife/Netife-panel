@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup />
+  <PropertyGroup>
+    <Source>F:\Netife\NetifePanel\Assets\icon\Netife.jpg</Source>
+    <SmallTileSource>F:\Netife\NetifePanel\Assets\icon\Netife.jpg</SmallTileSource>
+    <MediumTileSource>F:\Netife\NetifePanel\Assets\icon\Netife.jpg</MediumTileSource>
+    <WideTileSource>F:\Netife\NetifePanel\Assets\icon\Netife.jpg</WideTileSource>
+    <LargeTileSource>F:\Netife\NetifePanel\Assets\icon\Netife.jpg</LargeTileSource>
+    <AppIconSource>F:\Netife\NetifePanel\Assets\icon\Netife.jpg</AppIconSource>
+    <SplashScreenSource>F:\Netife\NetifePanel\Assets\icon\Netife.jpg</SplashScreenSource>
+    <PackageLogoSource>F:\Netife\NetifePanel\Assets\icon\Netife.jpg</PackageLogoSource>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x64</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+    <_LastSelectedProfileId>F:\Netife\NetifePanel\Properties\PublishProfiles\FolderProfile2.pubxml</_LastSelectedProfileId>
+    <ActiveDebugProfile>NetifePanel (Package)</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
   <ItemGroup>
     <Content Update="Strings\en-US\Resources.resw">
       <SubType>Designer</SubType>

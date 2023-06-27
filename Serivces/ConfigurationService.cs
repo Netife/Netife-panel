@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace NetifePanel.Serivces
 {
@@ -22,7 +23,7 @@ namespace NetifePanel.Serivces
 
         public void UpdateCommonValue(string sectionPathKey, string value)
         {
-            var path = Path.Combine(Path.Combine(AppContext.BaseDirectory, "Config"), "Settings.json");
+            var path = Path.Combine(Path.Combine(ApplicationData.Current.LocalFolder.Path, "Config"), "Settings.json");
             var json = File.ReadAllText(path);
             JsonNode jNode = JsonNode.Parse(json);
             string[] sections = sectionPathKey.Split(':');

@@ -19,6 +19,7 @@ using NetifePanel.Interface;
 using NetifePanel.ViewModels;
 using System.Threading;
 using System.Threading.Tasks;
+using WinUI3Localizer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,6 +34,8 @@ namespace NetifePanel.Views
         private AppWindow _apw;
 
         private OverlappedPresenter _presenter;
+
+        private ILocalizer _localizer = App.GetService<ILocalizer>();
         public ProgramLoadingPage()
         {
             this.InitializeComponent();
@@ -57,6 +60,8 @@ namespace NetifePanel.Views
             CenteredPosition.X = ((displayArea.WorkArea.Width - appWindow.Size.Width) / 2);
             CenteredPosition.Y = ((displayArea.WorkArea.Height - appWindow.Size.Height) / 2);
             App.CurrentApp.RootWindow.AppWindow.Move(CenteredPosition);
+            ViewModel.DispatcherQueue = DispatcherQueue;
+            ViewModel.XamlRoot = this.XamlRoot;
             Task.Run(PreLoading);
         }
 
@@ -68,10 +73,34 @@ namespace NetifePanel.Views
             _presenter = _apw.Presenter as OverlappedPresenter;
         }
 
-        public void PreLoading()
+        public async void PreLoading()
         {
-            Thread.Sleep(500);
-            App.GetService<INavigation>().NavigateInUIThread(DispatcherQueue, nameof(MainBodyPage));
+            Thread.Sleep(1000);
+            var loadRes = await ViewModel.PreCheck();
+            if (!loadRes)
+            {
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    var dialog = new ContentDialog();
+                    dialog.XamlRoot = this.XamlRoot;
+                    dialog.Title = _localizer.GetLocalizedString("FirstLoading_Dialog_Title");
+                    dialog.CloseButtonText = _localizer.GetLocalizedString("FirstLoading_Dialog_Button");
+                    dialog.DefaultButton = ContentDialogButton.Primary;
+
+                    var dialogContent = new TextBlock();
+                    dialogContent.Text = _localizer.GetLocalizedString("FirstLoading_Dialog_Content");
+                    dialogContent.TextWrapping = TextWrapping.Wrap;
+                    dialog.Content = dialogContent;
+                    await dialog.ShowAsync();
+                    Application.Current.Exit();
+                });
+                Thread.Sleep(60*1000);
+                Application.Current.Exit(); //Ensure exit
+            }
+            else
+            {
+                App.GetService<INavigation>().NavigateInUIThread(DispatcherQueue, nameof(MainBodyPage));
+            }   
         }
         public LoadingViewModel ViewModel { get; } = App.GetService<LoadingViewModel>();
     }

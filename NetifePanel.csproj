@@ -10,6 +10,28 @@
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
+
+    <ApplicationIcon>Assets\icon\Netife.ico</ApplicationIcon>
+
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+
+    <PackageCertificateKeyFile>NetifePanel_TemporaryKey.pfx</PackageCertificateKeyFile>
+
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+
+    <AppxBundle>Never</AppxBundle>
+
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+
+    <AppxPackageDir>F:\Netife\NetifePanel\bin\AppOut\</AppxPackageDir>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\icon\Netife.jpg" />
@@ -31,7 +53,6 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
 
@@ -40,6 +61,14 @@
     <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="Google.Protobuf" Version="3.23.3" />
+    <PackageReference Include="Grpc" Version="2.46.6" />
+    <PackageReference Include="Grpc.Core" Version="2.46.6" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.54.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.56.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
@@ -47,9 +76,11 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PInvoke.User32" Version="0.7.124" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
     <PackageReference Include="WinUI3Localizer" Version="1.0.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
+
 
   <!-- 
     Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
@@ -66,7 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Strings\**\*.resw">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +158,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-
+  <ItemGroup>
+    <Folder Include="Config\" />
+  </ItemGroup>
   <!-- 
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution 
     Explorer "Package and Publish" context menu entry to be enabled for this project even if 

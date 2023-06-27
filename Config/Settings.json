@@ -1,0 +1,25 @@
+{
+  "appearance": {
+    "language": "en-US"
+  },
+  "component": {
+    "lauchSettings": {
+      "JsRemote": {
+        "Host": "",
+        "Port": ""
+      },
+      "Dispatcher": {
+        "Host": "",
+        "Port": ""
+      },
+      "Probe": {
+        "Host": "",
+        "Port": ""
+      },
+      "Frontend": {
+        "Host": "",
+        "Port": ""
+      }
+    }
+  }
+}

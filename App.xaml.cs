@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Grpc.Core;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI;
@@ -10,6 +11,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using NetifeMessage;
 using NetifePanel.Interface;
 using NetifePanel.Serivces;
 using NetifePanel.ViewModels;
@@ -21,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -64,7 +67,7 @@ namespace NetifePanel
             return service;
         }
 
-        public static App CurrentApp { get; private set; } = (Current as App);
+        public static App CurrentApp { get; private set; } = Current as App;
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -74,16 +77,39 @@ namespace NetifePanel
         {
             //I18N
             await InitializeLocalizer();
-
+            
             //Build relative service
             ConfigureService();
-            
+
+            //Build Grpc Server
+            BuildFrontendGrpcServer();
+
+            //Build Default Frame
+            BuildDefaultFrame(args);
+        }
+
+        private void BuildDefaultFrame(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        {
             RootWindow = new MainWindow();
             RootFrame = new Frame();
             RootWindow.Content = RootFrame;
             RootWindow.Activate();
-
             RootFrame.Navigate(typeof(ProgramLoadingPage), args.Arguments);
+        }
+
+        private void BuildFrontendGrpcServer()
+        {
+            var config = GetService<IConfiguration>();
+            var configNode = config.GetRequiredSection("component").GetRequiredSection("lauchSettings");
+            new Server
+            {
+                Services =
+                           {
+                               NetifePost.BindService(GetService<NetifeFrontendCoreService>())
+                           },
+                Ports = { new ServerPort(configNode.GetSection("Frontend")["Host"], int.Parse(configNode.GetSection("Frontend")["Port"]), 
+                                            ServerCredentials.Insecure) }
+            }.Start();
         }
 
         private void ConfigureService()
@@ -92,15 +118,16 @@ namespace NetifePanel
                    .UseContentRoot(AppContext.BaseDirectory)
                    .ConfigureServices((ctx, service) =>
                    {
-
+            
                        //Core services
                        service.AddSingleton(Localizer.Get());
                        var navigateService = new NavigateService(Localizer.Get());
-
+            
                        service.AddSingleton<INavigation>(navigateService);
                        service.AddSingleton<IStaticData, StaticData>();
                        service.AddSingleton<IConfigurationService, ConfigurationService>();
-
+                       service.AddSingleton<INetifeService, Serivces.NetifeService>();
+                       service.AddSingleton<NetifeFrontendCoreService>();
 
                        //Configure Navigation
                        navigateService.Configure(nameof(ProgramLoadingPage), typeof(ProgramLoadingPage));
@@ -113,7 +140,7 @@ namespace NetifePanel
                        navigateService.Configure(nameof(MailPage), typeof(MailPage));
                        navigateService.Configure(nameof(LibraryPage), typeof(LibraryPage));
                        navigateService.Configure(nameof(SettingAppearancePage), typeof(SettingAppearancePage));
-
+            
                        //ViewModel
                        service.AddTransient<MainBodyViewModel>();
                        service.AddTransient<LoadingViewModel>();
@@ -125,17 +152,21 @@ namespace NetifePanel
                        service.AddTransient<MailViewModel>();
                        service.AddTransient<LibraryViewModel>();
                        service.AddTransient<SettingAppearanceViewModel>();
-
+            
                    })
                    .ConfigureAppConfiguration((ctx,builder) =>
                    {
                        //Check for the existence of the configuration
-                       var baseConfigPath = Path.Combine(AppContext.BaseDirectory, "Config");
+                       var baseConfigPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Config");
                        var configFolder = new DirectoryInfo(baseConfigPath);
                        if (!configFolder.Exists) configFolder.Create();
                        var file = new FileInfo(Path.Combine(baseConfigPath, "Settings.json"));
-                       if (!file.Exists) file.Create();
-                       
+                       if (!file.Exists)
+                       using (var sw = file.CreateText())
+                       {
+                           //Default Json WriteIn
+                           sw.Write("{\r\n  \"appearance\": {\r\n    \"language\": \"en-US\"\r\n  },\r\n  \"component\": {\r\n    \"lauchSettings\": {\r\n      \"JsRemote\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      },\r\n      \"Dispatcher\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      },\r\n      \"Probe\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      },\r\n      \"Frontend\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      }\r\n    }\r\n  }\r\n}");
+                       }
                        builder.AddJsonFile(file.FullName, optional: false, reloadOnChange: true);
                    })
                    .Build();
@@ -145,15 +176,17 @@ namespace NetifePanel
 
         private async Task InitializeLocalizer()
         {
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFolder stringsFolder = await localFolder.CreateFolderAsync("Strings", CreationCollisionOption.OpenIfExists);
+            var localFolder = Path.Combine(AppContext.BaseDirectory, "Strings");
+            StorageFolder stringsFolder = await StorageFolder.GetFolderFromPathAsync(localFolder);
+            if (Window.Current != null)
+            {
+                string resourceFileName = "Resources.resw";
+                await CreateStringResourceFileIfNotExists(stringsFolder, "en-US", resourceFileName);
+                await CreateStringResourceFileIfNotExists(stringsFolder, "zh-CN", resourceFileName);
+            }
 
-            string resourceFileName = "Resources.resw";
-            await CreateStringResourceFileIfNotExists(stringsFolder, "en-US", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "zh-CN", resourceFileName);
-            
             ILocalizer localizer = await new LocalizerBuilder()
-                .AddStringResourcesFolderForLanguageDictionaries(stringsFolder.Path)
+                .AddStringResourcesFolderForLanguageDictionaries(localFolder)
                 .SetOptions(options =>
                 {
                     options.DefaultLanguage = "en-US";

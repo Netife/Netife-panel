@@ -147,6 +147,15 @@
   <data name="BreadNavigate_Settings" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="FirstLoading_Dialog_Button" xml:space="preserve">
+    <value>退出软件</value>
+  </data>
+  <data name="FirstLoading_Dialog_Content" xml:space="preserve">
+    <value>无法下载预构建二进制文件，请检查你的网络链接和应用程式的读写权限。如果应用程式一直无法工作，请尝试联系Netife。</value>
+  </data>
+  <data name="FirstLoading_Dialog_Title" xml:space="preserve">
+    <value>运行时警告</value>
+  </data>
   <data name="Help_Summarize.Header" xml:space="preserve">
     <value>概述</value>
   </data>
@@ -175,6 +184,75 @@ Netife Panel 提供了若干网络抓包功能，包括但不限于流模式监�
   </data>
   <data name="LeftMainNavigate_Notification.Content" xml:space="preserve">
     <value>通知</value>
+  </data>
+  <data name="MainPage_DataGrid_ApiEndPoint" xml:space="preserve">
+    <value>API终结点</value>
+  </data>
+  <data name="MainPage_DataGrid_DstServer" xml:space="preserve">
+    <value>远程服务器地址</value>
+  </data>
+  <data name="MainPage_DataGrid_No" xml:space="preserve">
+    <value>编号</value>
+  </data>
+  <data name="MainPage_DataGrid_Pid" xml:space="preserve">
+    <value>服务进程号</value>
+  </data>
+  <data name="MainPage_DataGrid_ProcessName" xml:space="preserve">
+    <value>进程名称</value>
+  </data>
+  <data name="MainPage_DataGrid_Protocal" xml:space="preserve">
+    <value>协议体</value>
+  </data>
+  <data name="MainPage_DataGrid_RequestType" xml:space="preserve">
+    <value>请求方式</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Bind.Header" xml:space="preserve">
+    <value>绑定关系</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector.Header" xml:space="preserve">
+    <value>侦测器</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Request_Body.Header" xml:space="preserve">
+    <value>请求体</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Request_Cookies.Header" xml:space="preserve">
+    <value>存储文件</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Request_Header.Header" xml:space="preserve">
+    <value>请求头</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Request_Params.Header" xml:space="preserve">
+    <value>参数</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Request_Raw.Header" xml:space="preserve">
+    <value>裸请求</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Body.Header" xml:space="preserve">
+    <value>响应体</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Header.Header" xml:space="preserve">
+    <value>响应</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Params.Header" xml:space="preserve">
+    <value>参数</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Preview.Header" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Raw.Header" xml:space="preserve">
+    <value>裸响应</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_Output.Header" xml:space="preserve">
+    <value>调度器日志</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_View.Header" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_View_BasicInformation.Header" xml:space="preserve">
+    <value>基本信息</value>
+  </data>
+  <data name="MainPage_RightOperationRegionTabView_View_RequestTimeCost.Header" xml:space="preserve">
+    <value>请求耗时</value>
   </data>
   <data name="MainPage_ToolBar_FastOperation.Text" xml:space="preserve">
     <value>快捷操作：</value>
