@@ -145,7 +145,7 @@ namespace NetifePanel
                        service.AddTransient<MainBodyViewModel>();
                        service.AddTransient<LoadingViewModel>();
                        service.AddTransient<HelpViewModel>();
-                       service.AddTransient<HomeViewModel>();
+                       service.AddSingleton<HomeViewModel>();
                        service.AddTransient<ComposerViewModel>();
                        service.AddTransient<SettingViewModel>();
                        service.AddTransient<AccountViewModel>();
@@ -165,7 +165,7 @@ namespace NetifePanel
                        using (var sw = file.CreateText())
                        {
                            //Default Json WriteIn
-                           sw.Write("{\r\n  \"appearance\": {\r\n    \"language\": \"en-US\"\r\n  },\r\n  \"component\": {\r\n    \"lauchSettings\": {\r\n      \"JsRemote\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      },\r\n      \"Dispatcher\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      },\r\n      \"Probe\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      },\r\n      \"Frontend\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      }\r\n    }\r\n  }\r\n}");
+                           sw.Write("{\r\n  \"appearance\": {\r\n    \"language\": \"en-US\"\r\n  },\r\n  \"component\": {\r\n    \"lauchSettings\": {\r\n      \"JsRemote\": {\r\n        \"Host\": \"0.0.0.0\",\r\n        \"Port\": \"7892\"\r\n      },\r\n      \"Dispatcher\": {\r\n        \"Host\": \"0.0.0.0\",\r\n        \"Port\": \"7890\"\r\n      },\r\n      \"Probe\": {\r\n        \"Host\": \"\",\r\n        \"Port\": \"\"\r\n      },\r\n      \"Frontend\": {\r\n        \"Host\": \"0.0.0.0\",\r\n        \"Port\": \"7891\"\r\n      }\r\n    }\r\n  }\r\n}");
                        }
                        builder.AddJsonFile(file.FullName, optional: false, reloadOnChange: true);
                    })

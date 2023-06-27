@@ -5,20 +5,20 @@
   "component": {
     "lauchSettings": {
       "JsRemote": {
-        "Host": "",
-        "Port": ""
+        "Host": "0.0.0.0",
+        "Port": "7892"
       },
       "Dispatcher": {
-        "Host": "",
-        "Port": ""
+        "Host": "0.0.0.0",
+        "Port": "7890"
       },
       "Probe": {
         "Host": "",
         "Port": ""
       },
       "Frontend": {
-        "Host": "",
-        "Port": ""
+        "Host": "0.0.0.0",
+        "Port": "7891"
       }
     }
   }

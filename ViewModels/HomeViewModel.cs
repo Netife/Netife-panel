@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.Collections;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.UI.Dispatching;
 using NetifeMessage;
@@ -6,6 +7,7 @@ using NetifePanel.Interface;
 using NetifePanel.Models;
 using NetifePanel.Models.ArchieveItems;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,6 +26,8 @@ namespace NetifePanel.ViewModels
         private IConfigurationService _configurationService;
 
         private INetifeService _netifeService;
+
+        private ConcurrentDictionary<string, Packet> packetsLogger = new();
 
         private int no = 1;
         public DispatcherQueue DispatcherQueue { get; set; }
@@ -58,6 +62,7 @@ namespace NetifePanel.ViewModels
                 singalPacket.SrcIpPort = request.SrcIpPort;
                 singalPacket.DstIpPort = request.DstIpPort;
                 singalPacket.SrcIpAddr = request.SrcIpAddr;
+                singalPacket.UUID = request.Uuid;
                 singalPacket.DstIpAddr = request.DstIpAddr;
                 singalPacket.IsRawText = request.IsRawText;
                 singalPacket.ProcessName = request.ProcessName;
@@ -82,6 +87,17 @@ namespace NetifePanel.ViewModels
                 wrappedPacket.Protocal = packet.Protocal;
                 wrappedPacket.RequestType = packet.RequestType;
                 wrappedPacket.No = no++;
+
+                //assert if response or ws / wss
+                if (packetsLogger.TryGetValue(request.Uuid, out var key))
+                {
+                    key.NetworkSiglePackets.Add(singalPacket);
+                    return request;
+                }
+                else
+                {
+                    packetsLogger.TryAdd(request.Uuid, packet);
+                }
                 string hostUrl = string.Empty;
                 if (!request.IsRawText)
                 {
@@ -91,11 +107,11 @@ namespace NetifePanel.ViewModels
                         hostUrl = host[1].Split(" ")[1];
                         hostUrl += host[0].Split(" ")[1];
                         hostUrl = hostUrl.Replace("\n", "").Replace("\r","");
-                        hostUrl = request.RequestType + "://" + hostUrl;
+                        hostUrl = request.RequestType.ToString().ToLower() + "://" + hostUrl;
                     }
                     else
                     {
-                        hostUrl = "...";
+                        hostUrl = "(Cannot Probe)";
                     }
                 }
                 wrappedPacket.ApiEndPoint = hostUrl;
@@ -103,6 +119,9 @@ namespace NetifePanel.ViewModels
                 return request;
             });
         }
+
+        [ObservableProperty]
+        private WrappedPacket selectPacket;
 
         [ObservableProperty]
         private ObservableCollection<ArchieveItem> archieves = new() { 

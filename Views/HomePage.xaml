@@ -189,8 +189,9 @@
                                AutoGenerateColumns="False"
                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
-                               CanUserSortColumns="False" CanUserReorderColumns="True" CanUserResizeColumns="True"
+                               CanUserSortColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True"
                                IsReadOnly="True"
+                               SelectionChanged="packetDataGridSelectionChanged"
                                Grid.Row="1">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn x:Name="MainPage_DataGrid_No" Binding="{Binding Path=No}"/>
@@ -231,54 +232,118 @@
                     <TabViewItem IsClosable="False" l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="500"/>
+                                <RowDefinition Height="400"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Pivot Grid.Row="0">
-                                <Pivot.HeaderTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding}" FontSize="14"/>
-                                    </DataTemplate>
-                                </Pivot.HeaderTemplate>
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Header">
-                                    
-                                </PivotItem>
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Params">
-                                    
-                                </PivotItem>
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Cookies">
-                                    
-                                </PivotItem>
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Raw">
-                                    
-                                </PivotItem>
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Body">
+                            <ScrollViewer Grid.Row="0">
+                                <Pivot>
+                                    <Pivot.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" FontSize="14"/>
+                                        </DataTemplate>
+                                    </Pivot.HeaderTemplate>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Header">
+                                        <controls:DataGrid x:Name="InspectorRequestHeaders"
+                                                SelectionMode="Single"
+                                                AutoGenerateColumns="False"
+                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                                                CanUserSortColumns="False" CanUserResizeColumns="True"
+                                                IsReadOnly="True"
+                                                SelectionChanged="packetDataGridSelectionChanged">
+                                            <controls:DataGrid.Columns>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Header_Key" Binding="{Binding Path=Key}" Width="150"/>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Header_Value" Binding="{Binding Path=Value}" Width="300"/>
+                                            </controls:DataGrid.Columns>
+                                        </controls:DataGrid>
+                                    </PivotItem>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Params">
+                                        <controls:DataGrid x:Name="InspectorRequestParams"
+                                                SelectionMode="Single"
+                                                AutoGenerateColumns="False"
+                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                                                CanUserSortColumns="False" CanUserResizeColumns="True"
+                                                IsReadOnly="True"
+                                                SelectionChanged="packetDataGridSelectionChanged">
+                                            <controls:DataGrid.Columns>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Params_Key" Binding="{Binding Path=Key}" Width="150"/>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Params_Value" Binding="{Binding Path=Value}" Width="300"/>
+                                            </controls:DataGrid.Columns>
+                                        </controls:DataGrid>
+                                    </PivotItem>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Cookies">
+                                        <controls:DataGrid x:Name="InspectorRequestCookies"
+                                                SelectionMode="Single"
+                                                AutoGenerateColumns="False"
+                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                                                CanUserSortColumns="False" CanUserResizeColumns="True"
+                                                IsReadOnly="True"
+                                                SelectionChanged="packetDataGridSelectionChanged">
+                                            <controls:DataGrid.Columns>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Cookies_Key" Binding="{Binding Path=Key}" Width="150"/>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Cookies_Value" Binding="{Binding Path=Value}" Width="300"/>
+                                            </controls:DataGrid.Columns>
+                                        </controls:DataGrid>
+                                    </PivotItem>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Raw">
+                                        <TextBox IsReadOnly="True" x:Name="InspectorRequestRaw" TextWrapping="Wrap"/>
+                                    </PivotItem>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Body">
+                                        <TextBox IsReadOnly="True" x:Name="InspectorRequestBody" TextWrapping="Wrap"/>
+                                    </PivotItem>
+                                </Pivot>
+                            </ScrollViewer>
 
-                                </PivotItem>
-                            </Pivot>
-
-                            <Pivot Grid.Row="1">
-                                <Pivot.HeaderTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding}" FontSize="14"/>
-                                    </DataTemplate>
-                                </Pivot.HeaderTemplate>
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Header">
-                                                                                                      
-                                </PivotItem>                                                          
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Params">
-                                                                                                      
-                                </PivotItem>                                                          
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Preview">
-                                                                                                      
-                                </PivotItem>                                                          
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Raw">
-                                                                                                      
-                                </PivotItem>                                                          
-                                <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Body">
-
-                                </PivotItem>
-                            </Pivot>
+                            <ScrollViewer Grid.Row="1">
+                                <Pivot>
+                                    <Pivot.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" FontSize="14"/>
+                                        </DataTemplate>
+                                    </Pivot.HeaderTemplate>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Header">
+                                        <controls:DataGrid x:Name="InspectorResponseHeaders"
+                                                SelectionMode="Single"
+                                                AutoGenerateColumns="False"
+                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                                                CanUserSortColumns="False" CanUserResizeColumns="True"
+                                                IsReadOnly="True"
+                                                SelectionChanged="packetDataGridSelectionChanged">
+                                            <controls:DataGrid.Columns>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Response_Header_Key" Binding="{Binding Path=Key}" Width="150"/>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Response_Header_Value" Binding="{Binding Path=Value}" Width="300"/>
+                                            </controls:DataGrid.Columns>
+                                        </controls:DataGrid>
+                                    </PivotItem>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Cookie">
+                                        <controls:DataGrid x:Name="InspectorResponseCookies"
+                                                SelectionMode="Single"
+                                                AutoGenerateColumns="False"
+                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                                                CanUserSortColumns="False" CanUserResizeColumns="True"
+                                                IsReadOnly="True"
+                                                SelectionChanged="packetDataGridSelectionChanged">
+                                            <controls:DataGrid.Columns>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Response_Cookie_Key" Binding="{Binding Path=Key}" Width="150"/>
+                                                <controls:DataGridTextColumn x:Name="MainPage_Inspector_Response_Cookie_Value" Binding="{Binding Path=Value}" Width="300"/>
+                                            </controls:DataGrid.Columns>
+                                        </controls:DataGrid>
+                                    </PivotItem>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Preview">
+                                        <TextBlock Margin="10" Text="Have not done" VerticalAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    </PivotItem>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Raw">
+                                        <TextBox IsReadOnly="True" x:Name="InspectorResponseRaw" TextWrapping="Wrap"/>
+                                    </PivotItem>
+                                    <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Body">
+                                        <TextBox IsReadOnly="True" x:Name="InspectorResponseBody" TextWrapping="Wrap"/>
+                                    </PivotItem>
+                                </Pivot>
+                            </ScrollViewer>
                         </Grid>
                     </TabViewItem>
                     

@@ -13,6 +13,8 @@ namespace NetifePanel.Models.ArchieveItems
 
         public string DstIpAddr { get; set; }
 
+        public string UUID { get; set; }
+
         public string DstIpPort { get; set; }
 
         public string SrcIpAddr { get; set; }

@@ -206,6 +206,12 @@ If you want to learn more about Netife and its associated ecology, please visit 
   <data name="MainPage_DataGrid_RequestType" xml:space="preserve">
     <value>RequestType</value>
   </data>
+  <data name="MainPage_Inspector_Key" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="MainPage_Inspector_Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
   <data name="MainPage_RightOperationRegionTabView_Bind.Header" xml:space="preserve">
     <value>Bind</value>
   </data>
@@ -230,11 +236,11 @@ If you want to learn more about Netife and its associated ecology, please visit 
   <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Body.Header" xml:space="preserve">
     <value>Body</value>
   </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Cookie.Header" xml:space="preserve">
+    <value>Set-Cookie</value>
+  </data>
   <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Header.Header" xml:space="preserve">
     <value>Headers</value>
-  </data>
-  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Params.Header" xml:space="preserve">
-    <value>Params</value>
   </data>
   <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Preview.Header" xml:space="preserve">
     <value>Preview</value>

@@ -10,7 +10,7 @@
   <Identity
     Name="5031f303-bc16-44fd-9ed7-0d05ae437fcb"
     Publisher="CN=Netife"
-    Version="1.0.7.0" />
+    Version="1.0.13.0" />
 
   <mp:PhoneIdentity PhoneProductId="5031f303-bc16-44fd-9ed7-0d05ae437fcb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

@@ -206,6 +206,12 @@ Netife Panel 提供了若干网络抓包功能，包括但不限于流模式监�
   <data name="MainPage_DataGrid_RequestType" xml:space="preserve">
     <value>请求方式</value>
   </data>
+  <data name="MainPage_Inspector_Key" xml:space="preserve">
+    <value>键</value>
+  </data>
+  <data name="MainPage_Inspector_Value" xml:space="preserve">
+    <value>值</value>
+  </data>
   <data name="MainPage_RightOperationRegionTabView_Bind.Header" xml:space="preserve">
     <value>绑定关系</value>
   </data>
@@ -230,11 +236,11 @@ Netife Panel 提供了若干网络抓包功能，包括但不限于流模式监�
   <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Body.Header" xml:space="preserve">
     <value>响应体</value>
   </data>
+  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Cookie.Header" xml:space="preserve">
+    <value>请求存储</value>
+  </data>
   <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Header.Header" xml:space="preserve">
     <value>响应</value>
-  </data>
-  <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Params.Header" xml:space="preserve">
-    <value>参数</value>
   </data>
   <data name="MainPage_RightOperationRegionTabView_Inspector_Response_Preview.Header" xml:space="preserve">
     <value>预览</value>
