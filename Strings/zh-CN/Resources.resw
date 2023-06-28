@@ -147,6 +147,12 @@
   <data name="BreadNavigate_Settings" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="Commander_InputTips.PlaceholderText" xml:space="preserve">
+    <value>输入发送到Netife调度器的命令</value>
+  </data>
+  <data name="Commander_SendButton.Content" xml:space="preserve">
+    <value>发送</value>
+  </data>
   <data name="FirstLoading_Dialog_Button" xml:space="preserve">
     <value>退出软件</value>
   </data>
@@ -185,6 +191,15 @@ Netife Panel 提供了若干网络抓包功能，包括但不限于流模式监�
   <data name="LeftMainNavigate_Notification.Content" xml:space="preserve">
     <value>通知</value>
   </data>
+  <data name="MainPage_DataGridMenu_Copy" xml:space="preserve">
+    <value>复制选中项目</value>
+  </data>
+  <data name="MainPage_DataGridMenu_CopyApiEndPoint" xml:space="preserve">
+    <value>复制API终结点</value>
+  </data>
+  <data name="MainPage_DataGridMenu_Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
   <data name="MainPage_DataGrid_ApiEndPoint" xml:space="preserve">
     <value>API终结点</value>
   </data>
@@ -205,6 +220,12 @@ Netife Panel 提供了若干网络抓包功能，包括但不限于流模式监�
   </data>
   <data name="MainPage_DataGrid_RequestType" xml:space="preserve">
     <value>请求方式</value>
+  </data>
+  <data name="MainPage_InspectorMenu_CopyKey" xml:space="preserve">
+    <value>复制键</value>
+  </data>
+  <data name="MainPage_InspectorMenu_CopyValue" xml:space="preserve">
+    <value>复制值</value>
   </data>
   <data name="MainPage_Inspector_Key" xml:space="preserve">
     <value>键</value>
@@ -260,6 +281,24 @@ Netife Panel 提供了若干网络抓包功能，包括但不限于流模式监�
   <data name="MainPage_RightOperationRegionTabView_View_RequestTimeCost.Header" xml:space="preserve">
     <value>请求耗时</value>
   </data>
+  <data name="MainPage_RightOperationSummary_ApiPointMini.Text" xml:space="preserve">
+    <value>API终结点短链接：</value>
+  </data>
+  <data name="MainPage_RightOperationSummary_DstServer.Text" xml:space="preserve">
+    <value>终结点服务器：</value>
+  </data>
+  <data name="MainPage_RightOperationSummary_Pid.Text" xml:space="preserve">
+    <value>进程号：</value>
+  </data>
+  <data name="MainPage_RightOperationSummary_ProcessName.Text" xml:space="preserve">
+    <value>进程名：</value>
+  </data>
+  <data name="MainPage_ToolBar_Command.Content" xml:space="preserve">
+    <value>命令行</value>
+  </data>
+  <data name="MainPage_ToolBar_Command.Label" xml:space="preserve">
+    <value>命令终端</value>
+  </data>
   <data name="MainPage_ToolBar_FastOperation.Text" xml:space="preserve">
     <value>快捷操作：</value>
   </data>
@@ -278,22 +317,22 @@ Netife Panel 提供了若干网络抓包功能，包括但不限于流模式监�
   <data name="MainPage_ToolBar_FastOperation_OnlyXHR.Content" xml:space="preserve">
     <value>仅XHR</value>
   </data>
-  <data name="MainPage_ToolBar_Filter" xml:space="preserve">
+  <data name="MainPage_ToolBar_Filter.Label" xml:space="preserve">
     <value>过滤器</value>
   </data>
-  <data name="MainPage_ToolBar_State_Delete" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Delete.Label" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="MainPage_ToolBar_State_Pause" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Pause.Label" xml:space="preserve">
     <value>暂停</value>
   </data>
-  <data name="MainPage_ToolBar_State_Run" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Run.Label" xml:space="preserve">
     <value>运行</value>
   </data>
-  <data name="MainPage_ToolBar_State_Save" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Save.Label" xml:space="preserve">
     <value>保存</value>
   </data>
-  <data name="MainPage_ToolBar_State_Share" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Share.Label" xml:space="preserve">
     <value>分享</value>
   </data>
   <data name="Settings_Appearance_Language.Header" xml:space="preserve">

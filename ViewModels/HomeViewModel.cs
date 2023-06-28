@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Configuration;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
 using NetifeMessage;
 using NetifePanel.Interface;
 using NetifePanel.Models;
 using NetifePanel.Models.ArchieveItems;
+using NetifePanel.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -25,11 +28,14 @@ namespace NetifePanel.ViewModels
 
         private IConfigurationService _configurationService;
 
-        private INetifeService _netifeService;
+        public INetifeService _netifeService;
 
         private ConcurrentDictionary<string, Packet> packetsLogger = new();
 
         private int no = 1;
+
+        [ObservableProperty]
+        private bool enableDealWith = true;
         public DispatcherQueue DispatcherQueue { get; set; }
         public HomeViewModel(ILocalizer localizer, IConfiguration configuration, 
                              IConfigurationService configurationService, INetifeService netifeService)
@@ -55,6 +61,10 @@ namespace NetifePanel.ViewModels
         {
             _netifeService.ConfigureNetifePacketEvents(request =>
             {
+                if (!EnableDealWith)
+                {
+                    return request;
+                }
                 //Configure for double packets
                 var packet = new Packet();
                 var singalPacket = new NetworkSinglePacket();
@@ -102,12 +112,29 @@ namespace NetifePanel.ViewModels
                 if (!request.IsRawText)
                 {
                     var host = request.RawText.Split("\n");
-                    if (host[1].StartsWith("Host") && host.Length >= 2 )
+
+                    if (host.Length >= 2)
                     {
-                        hostUrl = host[1].Split(" ")[1];
-                        hostUrl += host[0].Split(" ")[1];
-                        hostUrl = hostUrl.Replace("\n", "").Replace("\r","");
-                        hostUrl = request.RequestType.ToString().ToLower() + "://" + hostUrl;
+                        var hostGroup = host.Where(sp => sp.StartsWith("Host: "));
+
+                        if (hostGroup.Count() != 0)
+                        {
+                            hostUrl = request.RequestType.ToString().ToLower() + "://" + hostGroup.First().Split(":")[1].Trim();
+                            var url = host[0].Split(" ");
+                            if (url.Length >= 2 && !url[0].Contains("HTTP"))
+                            {
+                                hostUrl += host[0].Split(" ")[1];
+                                hostUrl = hostUrl.Replace("\n", "").Replace("\r", "");
+                            }
+                            else
+                            {
+                                hostUrl = "(Cannot Probe)";
+                            }
+                        }
+                        else
+                        {
+                            hostUrl = "(Cannot Probe)";
+                        }
                     }
                     else
                     {
@@ -144,5 +171,26 @@ namespace NetifePanel.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<WrappedPacket> packets = new();
+
+        [ObservableProperty]
+        private ObservableCollection<ObservablePair<string, string>> requestHeaders = new();
+
+        [ObservableProperty]
+        private ObservableCollection<ObservablePair<string, string>> responseHeaders = new();
+
+        [ObservableProperty]
+        private ObservableCollection<ObservablePair<string, string>> requestParams = new();
+
+        [ObservableProperty]
+        private ObservableCollection<ObservablePair<string, string>> requestCookies = new();
+
+        [ObservableProperty]
+        private ObservableCollection<ObservablePair<string, string>> responseSetCookies = new();
+
+        [RelayCommand]
+        private void ClearWrappedPacketLists(object sender)
+        {
+            Packets.Clear();
+        }
     }
 }

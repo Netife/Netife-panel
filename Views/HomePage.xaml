@@ -154,7 +154,7 @@
                     </StackPanel>
                 </AppBarElementContainer>
                 <AppBarSeparator/>
-                <AppBarButton Icon="Pause" l:Uids.Uid="MainPage_ToolBar_State">
+                <AppBarButton Icon="Pause" l:Uids.Uid="MainPage_ToolBar_State" Click="StateChange">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F5"/>
                     </AppBarButton.KeyboardAccelerators>
@@ -164,7 +164,7 @@
                         <KeyboardAccelerator Modifiers="Control" Key="S"/>
                     </AppBarButton.KeyboardAccelerators>
                 </AppBarButton>
-                <AppBarButton Icon="Delete" l:Uids.Uid="MainPage_ToolBar_Delete">
+                <AppBarButton Icon="Delete" l:Uids.Uid="MainPage_ToolBar_Delete" Command="{x:Bind ViewModel.ClearWrappedPacketListsCommand}">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="D"/>
                     </AppBarButton.KeyboardAccelerators>
@@ -176,6 +176,11 @@
                 </AppBarButton>
                 <CommandBar.SecondaryCommands>
                     <AppBarButton Icon="Filter" l:Uids.Uid="MainPage_ToolBar_Filter">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="o" />
+                        </AppBarButton.KeyboardAccelerators>
+                    </AppBarButton>
+                    <AppBarButton Icon="NewWindow" l:Uids.Uid="MainPage_ToolBar_Command" Click="CommandClick" Content="2323">
                         <AppBarButton.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="o" />
                         </AppBarButton.KeyboardAccelerators>
@@ -192,6 +197,7 @@
                                CanUserSortColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True"
                                IsReadOnly="True"
                                SelectionChanged="packetDataGridSelectionChanged"
+                               RightTapped="packetDataGridRightTapped"
                                Grid.Row="1">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn x:Name="MainPage_DataGrid_No" Binding="{Binding Path=No}"/>
@@ -212,11 +218,33 @@
                     <!--View-->
                     <TabViewItem IsClosable="False" l:Uids.Uid="MainPage_RightOperationRegionTabView_View" HorizontalAlignment="Stretch">
                         <StackPanel>
-                            <Expander IsExpanded="False" l:Uids.Uid="MainPage_RightOperationRegionTabView_View_BasicInformation"
+                            <Expander IsExpanded="True" l:Uids.Uid="MainPage_RightOperationRegionTabView_View_BasicInformation"
                                       HorizontalAlignment="Stretch">
-                                <TextBlock Margin="10">
-                                Have not finished.
-                                </TextBlock>
+                                <ScrollViewer Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Grid VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock l:Uids.Uid="MainPage_RightOperationSummary_ApiPointMini" Grid.Column="0" Grid.Row="0" TextAlignment="Left"/>
+                                        <TextBlock Text="{x:Bind ViewModel.SelectPacket.ApiEndPointMini, Mode=OneWay}" Grid.Column="1" Grid.Row="0" TextAlignment="Left"/>
+
+                                        <TextBlock l:Uids.Uid="MainPage_RightOperationSummary_DstServer" Grid.Column="0" Grid.Row="1" TextAlignment="Left"/>
+                                        <TextBlock Text="{x:Bind ViewModel.SelectPacket.DstServer, Mode=OneWay}" Grid.Column="1" Grid.Row="1" TextAlignment="Left"/>
+
+                                        <TextBlock l:Uids.Uid="MainPage_RightOperationSummary_ProcessName" Grid.Column="0" Grid.Row="2" TextAlignment="Left"/>
+                                        <TextBlock Text="{x:Bind ViewModel.SelectPacket.ProcessName, Mode=OneWay}" Grid.Column="1" Grid.Row="2" TextAlignment="Left"/>
+
+                                        <TextBlock l:Uids.Uid="MainPage_RightOperationSummary_Pid" Grid.Column="0" Grid.Row="3" TextAlignment="Left"/>
+                                        <TextBlock Text="{x:Bind ViewModel.SelectPacket.Pid, Mode=OneWay}" Grid.Column="1" Grid.Row="3" TextAlignment="Left"/>
+                                    </Grid>
+                                </ScrollViewer>
                             </Expander>
 
                             <Expander IsExpanded="False" l:Uids.Uid="MainPage_RightOperationRegionTabView_View_RequestTimeCost"
@@ -243,14 +271,14 @@
                                         </DataTemplate>
                                     </Pivot.HeaderTemplate>
                                     <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Header">
-                                        <controls:DataGrid x:Name="InspectorRequestHeaders"
+                                        <controls:DataGrid x:Name="InspectorRequestHeaders" ItemsSource="{x:Bind ViewModel.RequestHeaders, Mode=OneWay}"
                                                 SelectionMode="Single"
                                                 AutoGenerateColumns="False"
                                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                 HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
-                                                CanUserSortColumns="False" CanUserResizeColumns="True"
+                                                CanUserSortColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True"
                                                 IsReadOnly="True"
-                                                SelectionChanged="packetDataGridSelectionChanged">
+                                                RightTapped="InspectorDictionaryClicked">
                                             <controls:DataGrid.Columns>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Header_Key" Binding="{Binding Path=Key}" Width="150"/>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Header_Value" Binding="{Binding Path=Value}" Width="300"/>
@@ -258,14 +286,14 @@
                                         </controls:DataGrid>
                                     </PivotItem>
                                     <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Params">
-                                        <controls:DataGrid x:Name="InspectorRequestParams"
+                                        <controls:DataGrid x:Name="InspectorRequestParams" ItemsSource="{x:Bind ViewModel.RequestParams, Mode=OneWay}"
                                                 SelectionMode="Single"
                                                 AutoGenerateColumns="False"
                                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                 HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
                                                 CanUserSortColumns="False" CanUserResizeColumns="True"
                                                 IsReadOnly="True"
-                                                SelectionChanged="packetDataGridSelectionChanged">
+                                                RightTapped="InspectorDictionaryClicked">
                                             <controls:DataGrid.Columns>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Params_Key" Binding="{Binding Path=Key}" Width="150"/>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Params_Value" Binding="{Binding Path=Value}" Width="300"/>
@@ -273,14 +301,14 @@
                                         </controls:DataGrid>
                                     </PivotItem>
                                     <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Request_Cookies">
-                                        <controls:DataGrid x:Name="InspectorRequestCookies"
+                                        <controls:DataGrid x:Name="InspectorRequestCookies" ItemsSource="{x:Bind ViewModel.RequestCookies, Mode=OneWay}"
                                                 SelectionMode="Single"
                                                 AutoGenerateColumns="False"
                                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                 HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
                                                 CanUserSortColumns="False" CanUserResizeColumns="True"
                                                 IsReadOnly="True"
-                                                SelectionChanged="packetDataGridSelectionChanged">
+                                                RightTapped="InspectorDictionaryClicked">
                                             <controls:DataGrid.Columns>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Cookies_Key" Binding="{Binding Path=Key}" Width="150"/>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Request_Cookies_Value" Binding="{Binding Path=Value}" Width="300"/>
@@ -304,14 +332,14 @@
                                         </DataTemplate>
                                     </Pivot.HeaderTemplate>
                                     <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Header">
-                                        <controls:DataGrid x:Name="InspectorResponseHeaders"
+                                        <controls:DataGrid x:Name="InspectorResponseHeaders" ItemsSource="{x:Bind ViewModel.ResponseHeaders, Mode=OneWay}"
                                                 SelectionMode="Single"
                                                 AutoGenerateColumns="False"
                                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                 HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
                                                 CanUserSortColumns="False" CanUserResizeColumns="True"
                                                 IsReadOnly="True"
-                                                SelectionChanged="packetDataGridSelectionChanged">
+                                                RightTapped="InspectorDictionaryClicked">
                                             <controls:DataGrid.Columns>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Response_Header_Key" Binding="{Binding Path=Key}" Width="150"/>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Response_Header_Value" Binding="{Binding Path=Value}" Width="300"/>
@@ -319,14 +347,14 @@
                                         </controls:DataGrid>
                                     </PivotItem>
                                     <PivotItem l:Uids.Uid="MainPage_RightOperationRegionTabView_Inspector_Response_Cookie">
-                                        <controls:DataGrid x:Name="InspectorResponseCookies"
+                                        <controls:DataGrid x:Name="InspectorResponseCookies" ItemsSource="{x:Bind ViewModel.ResponseSetCookies, Mode=OneWay}"
                                                 SelectionMode="Single"
                                                 AutoGenerateColumns="False"
                                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                 HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
                                                 CanUserSortColumns="False" CanUserResizeColumns="True"
                                                 IsReadOnly="True"
-                                                SelectionChanged="packetDataGridSelectionChanged">
+                                                RightTapped="InspectorDictionaryClicked">
                                             <controls:DataGrid.Columns>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Response_Cookie_Key" Binding="{Binding Path=Key}" Width="150"/>
                                                 <controls:DataGridTextColumn x:Name="MainPage_Inspector_Response_Cookie_Value" Binding="{Binding Path=Value}" Width="300"/>

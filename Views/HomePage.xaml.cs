@@ -17,6 +17,14 @@ using WinUI3Localizer;
 using NetifePanel.Models;
 using System.Web;
 using Google.Protobuf.WellKnownTypes;
+using CommunityToolkit.WinUI.UI.Controls;
+using Windows.ApplicationModel.DataTransfer;
+using Microsoft.UI;
+using static PInvoke.User32;
+using System.Collections.ObjectModel;
+using NetifePanel.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
+using NetifePanel.Windows;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -42,6 +50,7 @@ namespace NetifePanel.Views
             RegisterDataGridHeader();
             var localizer = Localizer.Get();
             localizer.LanguageChanged += LanguageChanged;
+
         }
 
         private void RegisterDataGridHeader()
@@ -103,15 +112,16 @@ namespace NetifePanel.Views
 
             //Headers
             var requestSplit = InspectorRequestRaw.Text.Split("\r").Skip(1);
-            var requestHeaders = new Dictionary<string, string>();
             var cookie = string.Empty;
             var setCookie = new List<string>();
+            ViewModel.RequestHeaders.Clear();
             foreach (var row in requestSplit)
             {
                 if (row.Contains(": "))
                 {
                     var split = row.Split(": ");
-                    requestHeaders.Add(split[0], split[1]);
+                    ViewModel.RequestHeaders.Add(new(split[0], split[1]));
+                    
                     if (split[0].ToLower() == "cookie")
                     {
                         cookie = split[1];
@@ -122,16 +132,15 @@ namespace NetifePanel.Views
                     break;
                 }
             }
-            InspectorRequestHeaders.ItemsSource = requestHeaders;
-
+            
             var responseSplit = InspectorResponseRaw.Text.Split("\r").Skip(1);
-            var responseHeaders = new Dictionary<string, string>();
+            ViewModel.ResponseHeaders.Clear();
             foreach (var row in responseSplit)
             {
                 if (row.Contains(": "))
                 {
                     var split = row.Split(": ");
-                    responseHeaders.Add(split[0], split[1]);
+                    ViewModel.ResponseHeaders.Add(new (split[0], split[1]));
                     if (split[0].ToLower() == "set-cookie")
                     {
                         setCookie.Add(split[1]);
@@ -142,52 +151,208 @@ namespace NetifePanel.Views
                     break;
                 }
             }
-            InspectorResponseHeaders.ItemsSource = responseHeaders;
 
             //Params
             var query = ViewModel.SelectPacket.ApiEndPoint.Split("?");
+            ViewModel.RequestParams.Clear();
             if (query.Length >= 2)
             {
                 var queryGroups = HttpUtility.UrlDecode(query[1]).Split("&");
-                var requestParams = new Dictionary<string, string>();
                 foreach (var group in queryGroups)
                 {
                     var split = group.Split("=");
                     if (split.Length >= 2)
                     {
-                        requestParams.Add(split[0], split[1]);
+                        ViewModel.RequestParams.Add(new(split[0], split[1]));
                     }
                 }
-                InspectorRequestParams.ItemsSource = requestParams;
             }
 
             //Cookie
+            ViewModel.RequestCookies.Clear();
             if (!string.IsNullOrEmpty(cookie))
             {
                 var cookieGroups = cookie.Split(";");
-                var cookies = new Dictionary<string, string>();
                 foreach (var group in cookieGroups)
                 {
                     var split = group.Trim().Split("=");
-                    cookies.Add(split[0], split[1]);
+                    ViewModel.RequestCookies.Add(new(split[0], split[1]));
                 }
-                InspectorRequestCookies.ItemsSource = cookies;
             }
 
+            ViewModel.ResponseSetCookies.Clear();
             if (setCookie.Count != 0)
             {
                 foreach (var slice in setCookie)
                 {
                     var cookieGroups = slice.Split(";");
-                    var cookies = new Dictionary<string, string>();
                     foreach (var group in cookieGroups)
                     {
                         var split = group.Trim().Split("=");
-                        cookies.Add(split[0], split[1]);
+                        ViewModel.ResponseSetCookies.Add(new(split[0], split[1]));
                     }
-                    InspectorResponseCookies.ItemsSource = cookies;
                 }
             }
+        }
+
+        private void packetDataGridRightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            MenuFlyout menu = new MenuFlyout();
+
+            var localizer = App.GetService<ILocalizer>();
+
+            //Copy CurrentCell
+            MenuFlyoutItem copyCellItem = new MenuFlyoutItem
+            {
+                Text = localizer.GetLocalizedString("MainPage_DataGridMenu_Copy"),
+            };
+
+            copyCellItem.Click += (s, args) =>
+            {
+                var originalSource = e.OriginalSource as FrameworkElement;
+                var cell = FindParent<DataGridCell>(originalSource);
+                if (cell is DataGridCell cellContent) 
+                {
+                    DataPackage dataPackage = new DataPackage();
+                    dataPackage.SetText((cellContent.Content as TextBlock).Text);
+                    Clipboard.SetContent(dataPackage);
+                }
+            };
+
+            //Copy CurrentApiEndPoint
+            MenuFlyoutItem copyApiEndPoint = new MenuFlyoutItem
+            {
+                Text = localizer.GetLocalizedString("MainPage_DataGridMenu_CopyApiEndPoint"),
+            };
+
+            copyApiEndPoint.Click += (s, args) =>
+            {
+                var row = packetDataGrid.SelectedItem;
+                if (row is WrappedPacket packet)
+                {
+                    DataPackage dataPackage = new DataPackage();
+                    dataPackage.SetText(packet.ApiEndPoint);
+                    Clipboard.SetContent(dataPackage);
+                }
+            };
+
+            //Delete Current Item
+            MenuFlyoutItem deleteItem = new MenuFlyoutItem
+            {
+                Text = localizer.GetLocalizedString("MainPage_DataGridMenu_Delete"),
+            };
+
+            deleteItem.Click += (s, args) =>
+            {
+                var row = packetDataGrid.SelectedItem;
+                if (row is WrappedPacket packet)
+                {
+                    ViewModel.Packets.Remove(packet);
+                }
+            };
+
+            menu.Items.Add(copyCellItem);
+            menu.Items.Add(copyApiEndPoint);
+            menu.Items.Add(deleteItem);
+            menu.ShowAt(packetDataGrid, e.GetPosition(packetDataGrid));
+        }
+
+        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
+
+            if (parentObject == null) return null;
+
+            T parent = parentObject as T;
+            if (parent != null)
+                return parent;
+            else
+                return FindParent<T>(parentObject);
+        }
+
+        private async void StateChange(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.EnableDealWith)
+            {
+                //Pause
+                var bar = sender as AppBarButton;
+                FontIcon icon = new FontIcon();
+                icon.Glyph = "\uE768";
+                bar.Icon = icon;
+                await ViewModel._netifeService.CloseProbeService();
+            }
+            else
+            {
+                //Start
+                var bar = sender as AppBarButton;
+                FontIcon icon = new FontIcon();
+                icon.Glyph = "\uE769";
+                bar.Icon = icon;
+                await ViewModel._netifeService.StartProbeService();
+            }
+            ViewModel.EnableDealWith = !ViewModel.EnableDealWith;
+        }
+
+        private void InspectorDictionaryClicked(object sender, RightTappedRoutedEventArgs e)
+        {
+            //TODO Solve the selectItem cannot work
+            MenuFlyout menu = new MenuFlyout();
+            var pos = sender as DataGrid;
+            
+            var localizer = App.GetService<ILocalizer>();
+
+            //CopyKey
+            MenuFlyoutItem copyKey = new MenuFlyoutItem
+            {
+                Text = localizer.GetLocalizedString("MainPage_InspectorMenu_CopyKey"),
+            };
+
+            copyKey.Click += (s, args) =>
+            {
+                var row = pos.SelectedItem;
+                if (row is ObservablePair<string, string> dic)
+                {
+                    DataPackage dataPackage = new DataPackage();
+                    dataPackage.SetText(dic.Key);
+                    Clipboard.SetContent(dataPackage);
+                }
+            };
+
+            //CopyValue
+            MenuFlyoutItem copyValue = new MenuFlyoutItem
+            {
+                Text = localizer.GetLocalizedString("MainPage_InspectorMenu_CopyValue"),
+            };
+
+            copyValue.Click += (s, args) =>
+            {
+                var row = packetDataGrid.SelectedItem;
+                if (row is ObservablePair<string, string> dic)
+                {
+                    DataPackage dataPackage = new DataPackage();
+                    dataPackage.SetText(dic.Value);
+                    Clipboard.SetContent(dataPackage);
+                }
+            };
+
+            menu.Items.Add(copyKey);
+            menu.Items.Add(copyValue);
+            menu.ShowAt(pos, e.GetPosition(pos));
+        }
+
+        private void CommandClick(object sender, RoutedEventArgs e)
+        {
+            CreateCommandQueryWindows();
+        }
+
+        private void CreateCommandQueryWindows()
+        {
+            var queryWindow = new QueryWindow();
+            QueryWindow.Instance = queryWindow;
+            var queryFrame = new Frame();
+            queryWindow.Content = queryFrame;
+            queryWindow.Activate();
+            queryFrame.Navigate(typeof(QueryPage));
         }
     }
 }

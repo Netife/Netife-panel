@@ -2,6 +2,7 @@
 using NetifePanel.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,5 +34,21 @@ namespace NetifePanel.Interface
         /// <param name="request"></param>
         /// <returns></returns>
         public Task<NetifeProbeResponse> InvokeTriggers(NetifeProbeRequest request);
+        /// <summary>
+        /// Start Probe Service
+        /// </summary>
+        /// <returns></returns>
+        Task CloseProbeService();
+        /// <summary>
+        /// Close Probe Service
+        /// </summary>
+        /// <returns></returns>
+        Task StartProbeService();
+        /// <summary>
+        /// Carry Remote Dispatcher Command
+        /// </summary>
+        /// <param name="rawCommand"></param>
+        /// <returns></returns>
+        string QueryRemoteCommand(string rawCommand);
     }
 }

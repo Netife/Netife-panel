@@ -128,6 +128,7 @@ namespace NetifePanel
                        service.AddSingleton<IConfigurationService, ConfigurationService>();
                        service.AddSingleton<INetifeService, Serivces.NetifeService>();
                        service.AddSingleton<NetifeFrontendCoreService>();
+                      
 
                        //Configure Navigation
                        navigateService.Configure(nameof(ProgramLoadingPage), typeof(ProgramLoadingPage));
@@ -152,7 +153,7 @@ namespace NetifePanel
                        service.AddTransient<MailViewModel>();
                        service.AddTransient<LibraryViewModel>();
                        service.AddTransient<SettingAppearanceViewModel>();
-            
+                       
                    })
                    .ConfigureAppConfiguration((ctx,builder) =>
                    {

@@ -52,6 +52,7 @@ namespace NetifePanel.ViewModels
                 DispatcherQueue.TryEnqueue(() => LoadingTips = "First Start will take a long time to init...");
                 Thread.Sleep(5000);
                 DispatcherQueue.TryEnqueue(() => LoadingTips = "Trying to download PreBuilt Binary...");
+
                 var client = new RestClient();
                 var md5Req = new RestRequest("http://netife.sorux.cn/download/md5");
                 var md5 = await client.ExecuteAsync(md5Req);
@@ -87,6 +88,55 @@ namespace NetifePanel.ViewModels
                     File.Delete(filePath);
                     DispatcherQueue.TryEnqueue(() => LoadingTips = "Environment Checking...");
                     Thread.Sleep(3000);
+                }
+            }
+            else
+            {
+                var md5PreChecked = File.ReadAllText(preChecked.Path);
+                var client = new RestClient();
+                var md5Req = new RestRequest("http://netife.sorux.cn/download/md5");
+                var md5 = await client.ExecuteAsync(md5Req);
+                if (md5PreChecked != md5.Content)
+                {
+                    DispatcherQueue.TryEnqueue(() => LoadingTips = "Receive update request, trying to find index of download...");
+                    Thread.Sleep(2000);
+                    new DirectoryInfo(Path.Combine(dataFolder.Path, "bin")).Delete(true);
+                    new FileInfo(preChecked.Path).Delete();
+                    DispatcherQueue.TryEnqueue(() => LoadingTips = "Trying to update PreBuilt Binary...");
+                    Thread.Sleep(3000);
+
+                    var binaryFiles = new RestRequest("http://netife.sorux.cn/download/Binary.zip");
+                    var bin = await client.ExecuteAsync(binaryFiles);
+                    var filePath = Path.Combine(dataFolder.Path, "Binary.zip");
+                    await File.WriteAllBytesAsync(filePath, bin.RawBytes);
+
+                    string md5CacledString = string.Empty;
+                    using (var md5Cacled = MD5.Create())
+                    {
+                        using (var stream = File.OpenRead(filePath))
+                        {
+                            byte[] hashBytes = md5Cacled.ComputeHash(stream);
+                            md5CacledString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                        }
+                    }
+
+                    if (md5CacledString != md5.Content)
+                    {
+                        DispatcherQueue.TryEnqueue(() => LoadingTips = "PreBuilt Binary cannnot fit the expect md5...");
+                        Thread.Sleep(3000);
+                        DispatcherQueue.TryEnqueue(() => LoadingTips = "Error for downloading prebuilt binary content!!!");
+                        Thread.Sleep(1000);
+                        return false;
+                    }
+                    else
+                    {
+                        DispatcherQueue.TryEnqueue(() => LoadingTips = "Extract PreBuilt Binary...");
+                        ZipFile.ExtractToDirectory(filePath, dataFolder.Path);
+                        File.WriteAllText(Path.Combine(dataFolder.Path, "md5"), md5.Content);
+                        File.Delete(filePath);
+                        DispatcherQueue.TryEnqueue(() => LoadingTips = "Environment Checking...");
+                        Thread.Sleep(3000);
+                    }
                 }
             }
 

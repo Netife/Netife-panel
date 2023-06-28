@@ -45,6 +45,8 @@
     <None Remove="Views\ProgramLoadingPage.xaml" />
     <None Remove="Views\SettingAppearancePage.xaml" />
     <None Remove="Views\SettingPage.xaml" />
+    <None Remove="Windows\QueryPage.xaml" />
+    <None Remove="Windows\QueryWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -160,6 +162,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Windows\QueryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Windows\QueryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <!-- 
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution 

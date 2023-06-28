@@ -31,6 +31,12 @@
     <None Update="Package.appxmanifest">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="Windows\QueryPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\QueryWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\SettingAppearancePage.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -147,6 +147,12 @@
   <data name="BreadNavigate_Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Commander_InputTips.PlaceholderText" xml:space="preserve">
+    <value>Input command sending to Netife Dispatcher</value>
+  </data>
+  <data name="Commander_SendButton.Content" xml:space="preserve">
+    <value>Send</value>
+  </data>
   <data name="FirstLoading_Dialog_Button" xml:space="preserve">
     <value>Quit</value>
   </data>
@@ -165,7 +171,7 @@ Netife Panel provides several network packet capture functions, including but no
 If you want to learn more about Netife and its associated ecology, please visit our Github organization: Netife.</value>
   </data>
   <data name="Home_Archieve_Tip.Text" xml:space="preserve">
-    <value>My Archieves</value>
+    <value>My Archives</value>
   </data>
   <data name="LeftMainNavigate_Account.Content" xml:space="preserve">
     <value>Account</value>
@@ -184,6 +190,15 @@ If you want to learn more about Netife and its associated ecology, please visit 
   </data>
   <data name="LeftMainNavigate_Notification.Content" xml:space="preserve">
     <value>Notification</value>
+  </data>
+  <data name="MainPage_DataGridMenu_Copy" xml:space="preserve">
+    <value>CopySelectCell</value>
+  </data>
+  <data name="MainPage_DataGridMenu_CopyApiEndPoint" xml:space="preserve">
+    <value>CopyApiEndPoint</value>
+  </data>
+  <data name="MainPage_DataGridMenu_Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="MainPage_DataGrid_ApiEndPoint" xml:space="preserve">
     <value>ApiEndPoint</value>
@@ -205,6 +220,12 @@ If you want to learn more about Netife and its associated ecology, please visit 
   </data>
   <data name="MainPage_DataGrid_RequestType" xml:space="preserve">
     <value>RequestType</value>
+  </data>
+  <data name="MainPage_InspectorMenu_CopyKey" xml:space="preserve">
+    <value>CopyKey</value>
+  </data>
+  <data name="MainPage_InspectorMenu_CopyValue" xml:space="preserve">
+    <value>CopyValue</value>
   </data>
   <data name="MainPage_Inspector_Key" xml:space="preserve">
     <value>Key</value>
@@ -260,6 +281,24 @@ If you want to learn more about Netife and its associated ecology, please visit 
   <data name="MainPage_RightOperationRegionTabView_View_RequestTimeCost.Header" xml:space="preserve">
     <value>RequestTimeCost</value>
   </data>
+  <data name="MainPage_RightOperationSummary_ApiPointMini.Text" xml:space="preserve">
+    <value>ApiEndPointShort:</value>
+  </data>
+  <data name="MainPage_RightOperationSummary_DstServer.Text" xml:space="preserve">
+    <value>Destination Server:</value>
+  </data>
+  <data name="MainPage_RightOperationSummary_Pid.Text" xml:space="preserve">
+    <value>Process ID:</value>
+  </data>
+  <data name="MainPage_RightOperationSummary_ProcessName.Text" xml:space="preserve">
+    <value>Process Name:</value>
+  </data>
+  <data name="MainPage_ToolBar_Command.Content" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="MainPage_ToolBar_Command.Label" xml:space="preserve">
+    <value>Commander</value>
+  </data>
   <data name="MainPage_ToolBar_FastOperation.Text" xml:space="preserve">
     <value>FastOperation:</value>
   </data>
@@ -278,22 +317,22 @@ If you want to learn more about Netife and its associated ecology, please visit 
   <data name="MainPage_ToolBar_FastOperation_OnlyXHR.Content" xml:space="preserve">
     <value>OnlyXHR</value>
   </data>
-  <data name="MainPage_ToolBar_Filter" xml:space="preserve">
+  <data name="MainPage_ToolBar_Filter.Label" xml:space="preserve">
     <value>Filter</value>
   </data>
-  <data name="MainPage_ToolBar_State_Delete" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Delete.Label" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="MainPage_ToolBar_State_Pause" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Pause.Label" xml:space="preserve">
     <value>Pause</value>
   </data>
-  <data name="MainPage_ToolBar_State_Run" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Run.Label" xml:space="preserve">
     <value>Run</value>
   </data>
-  <data name="MainPage_ToolBar_State_Save" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Save.Label" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="MainPage_ToolBar_State_Share" xml:space="preserve">
+  <data name="MainPage_ToolBar_State_Share.Label" xml:space="preserve">
     <value>Share</value>
   </data>
   <data name="Settings_Appearance_Language.Header" xml:space="preserve">
